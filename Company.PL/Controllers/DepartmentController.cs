@@ -51,5 +51,43 @@ namespace Company.PL.Controllers
             }
             return View(model);
         }
+
+        public IActionResult Details(int? id, string ViewName = "Details")
+        {
+            if (id == null)
+                return NotFound();
+
+            var Department = _departmentRepository.Get(id.Value);
+            if (Department == null)
+                return NotFound();
+
+            return View(Department);
+        }
+
+        public IActionResult Edit(int? id)
+        {
+            return Details(id, "Edit");
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, Department department)
+        {
+            if (id != department.Id)
+                return BadRequest();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _departmentRepository.Update(department);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    return View(department);
+                }
+            }
+            return View(department);
+        }
+
     }
 }
