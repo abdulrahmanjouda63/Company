@@ -18,6 +18,7 @@ namespace Company.DAL.Data.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
             base.OnModelCreating(modelBuilder);
         }
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -25,5 +26,6 @@ namespace Company.DAL.Data.Contexts
         //    optionsBuilder.UseSqlServer("Server=./;Database=Company;Trusted_Connection=True;TrustServerCertificate=True;");
         //}
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Employee> Employees { get; set; }
     }
 }
