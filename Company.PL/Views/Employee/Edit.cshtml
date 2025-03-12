@@ -1,0 +1,24 @@
+﻿@model CreateEmployeeDto
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1 class="text-center">Update Employee</h1>
+<br />
+<br />
+
+<form asp-action="Edit" asp-controller="Employee">
+
+    <partial name="EmployeePartialView/_CreateEditPartialView"/>
+
+    <div>
+        <input type="submit" class="btn btn-success" value="Save Changes" /> |
+        <a asp-controller="Employee" asp-action="Index" class="btn btn-secondary">Back to list</a>
+    </div>
+
+</form>
+
+@section ValidationScript{
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

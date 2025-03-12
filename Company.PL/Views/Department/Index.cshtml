@@ -32,21 +32,7 @@
 					<td>@item.Code</td>
 					<td>@item.Name</td>
 					<td>@item.CreateAt</td>
-					<td>
-						<a asp-action="Details" asp-controller="Department" asp-route-id="@item.Id" class="btn btn-warning">
-							<i class="fas fa-eye"></i>  Details
-						</a>
-					</td>
-					<td>
-						<a asp-action="Edit" asp-controller="Department" asp-route-id="@item.Id" class="btn btn-success">
-							<i class="fas fa-edit"></i>  Update
-						</a>
-					</td>
-					<td>
-						<a asp-action="Delete" asp-controller="Department" asp-route-id="@item.Id" class="btn btn-danger">
-							<i class="fas fa-trash"></i>  Delete
-						</a>
-					</td>
+					<partial name="_ButtonsPartialView" model="@item.Id" />
 				</tr>
 			}
 		</tbody>
