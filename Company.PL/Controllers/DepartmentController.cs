@@ -70,7 +70,8 @@ namespace Company.PL.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, Department department)
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit([FromRoute] int? id, Department department)
         {
             if (id != department.Id)
                 return BadRequest();
@@ -89,5 +90,28 @@ namespace Company.PL.Controllers
             return View(department);
         }
 
+        public IActionResult Delete(int? id)
+        {
+            return Details(id, "Delete");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete([FromRoute] int? id, Department department)
+        {
+            if (id != department.Id)
+                return BadRequest();
+
+            try
+            {
+                _departmentRepository.Delete(department);
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View(department);
+            }
+
+        }
     }
 }
