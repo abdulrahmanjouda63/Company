@@ -8,7 +8,7 @@
 <br />
 <br />
 
-<form asp-action="Edit" asp-controller="Department">
+<form asp-action="Update" asp-controller="Department">
     <input hidden asp-for="Id" />
     <div class="my-3">
         <label class="col-form-label" asp-for="Code"></label>
@@ -26,7 +26,7 @@
         <span asp-validation-for="CreateAt" class="text-danger"></span>
     </div>
     <input type="submit" class="btn btn-primary" value="Save" /> |
-    <a asp-controller="Department" asp-action="Index" class="btn btn-light">Back to list</a>
+    <a asp-controller="Department" asp-action="Index" class="btn btn-secondary">Back to list</a>
 
 </form>
 
