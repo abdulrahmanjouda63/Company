@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿// Ignore Spelling: Dto Dtos Emp
+
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Company.PL.Dtos
 {
@@ -19,7 +22,10 @@ namespace Company.PL.Dtos
         public decimal Salary { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
+        [DisplayName("Hiring Date")]
         public DateTime HiringDate { get; set; }
+        [DisplayName("Create At")]
         public DateTime CreateAt { get; set; }
+        public int? DepartmentId { get; set; }
     }
 }

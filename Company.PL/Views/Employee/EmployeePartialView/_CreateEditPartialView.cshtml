@@ -1,46 +1,68 @@
 ﻿@model CreateEmployeeDto
-<div class="my-3">
-	<label class="col-form-label" asp-for="Name"></label>
-	<input class="form-control" asp-for="Name" />
+@{
+	var Departments = new SelectList(ViewData["Departments"] as IEnumerable<Department>,"Id","Name");
+}
+<div class="mb-3">
+	<label class="form-label" asp-for="Name"></label>
+	<input type="text" class="form-control" asp-for="Name" placeholder="Enter name" />
 	<span asp-validation-for="Name" class="text-danger"></span>
 </div>
-<div class="my-3">
-	<label class="col-form-label" asp-for="Age"></label>
-	<input class="form-control" asp-for="Age" />
+
+<div class="mb-3">
+	<label class="form-label" asp-for="Age"></label>
+	<input type="number" class="form-control" asp-for="Age" placeholder="Enter age" />
 	<span asp-validation-for="Age" class="text-danger"></span>
 </div>
-<div class="my-3">
-	<label class="col-form-label" asp-for="Address"></label>
-	<input class="form-control" asp-for="Address" />
+
+<div class="mb-3">
+	<label class="form-label" asp-for="Address"></label>
+	<input type="text" class="form-control" asp-for="Address" placeholder="Enter address" />
 	<span asp-validation-for="Address" class="text-danger"></span>
 </div>
-<div class="my-3">
-	<label class="col-form-label" asp-for="Email"></label>
-	<input class="form-control" asp-for="Email" />
+
+<div class="mb-3">
+	<label class="form-label" asp-for="Email"></label>
+	<input type="email" class="form-control" asp-for="Email" placeholder="Enter email" />
 	<span asp-validation-for="Email" class="text-danger"></span>
 </div>
-<div class="my-3">
-	<label class="col-form-label" asp-for="Salary"></label>
-	<input class="form-control" asp-for="Salary" />
+
+<div class="mb-3">
+	<label class="form-label" asp-for="Salary"></label>
+	<input type="number" class="form-control" asp-for="Salary" placeholder="Enter salary" step="0.01" />
 	<span asp-validation-for="Salary" class="text-danger"></span>
 </div>
-<div class="my-3">
-	<label class="col-form-label" asp-for="Phone"></label>
-	<input class="form-control" asp-for="Phone" />
+
+<div class="mb-3">
+	<label class="form-label" asp-for="Phone"></label>
+	<input type="tel" class="form-control" asp-for="Phone" placeholder="Enter phone number" />
 	<span asp-validation-for="Phone" class="text-danger"></span>
 </div>
-<div class="my-3">
-	<label class="col-form-label" asp-for="HiringDate"></label>
-	<input class="form-control" asp-for="HiringDate" />
+
+<div class="mb-3">
+	<label class="form-label" asp-for="HiringDate"></label>
+	<input type="date" class="form-control" asp-for="HiringDate" />
 	<span asp-validation-for="HiringDate" class="text-danger"></span>
 </div>
-<div class="my-3">
-	<input class="form-check" asp-for="IsActive" />
-	<label class="col-form-label" asp-for="IsActive"></label>
 
+<div class="mb-3">
+	<label class="form-label" asp-for="CreateAt"></label>
+	<input type="datetime-local" class="form-control" asp-for="CreateAt" />
+	<span asp-validation-for="CreateAt" class="text-danger"></span>
 </div>
-<div class="my-3">
-	<input class="form-check" asp-for="IsDeleted" />
-	<label class="col-form-label" asp-for="IsDeleted"></label>
 
+<div class="mb-3">
+	<label class="form-label" asp-for="DepartmentId"></label>
+	<select asp-for="DepartmentId" asp-items="Departments" class="form-control">
+		<option value="@null">--Select Department--</option>
+	</select>
+</div>
+
+<div class="form-check mb-3">
+	<input class="form-check-input" type="checkbox" asp-for="IsActive" />
+	<label class="form-check-label" asp-for="IsActive"></label>
+</div>
+
+<div class="form-check mb-3">
+	<input class="form-check-input" type="checkbox" asp-for="IsDeleted" />
+	<label class="form-check-label" asp-for="IsDeleted"></label>
 </div>
