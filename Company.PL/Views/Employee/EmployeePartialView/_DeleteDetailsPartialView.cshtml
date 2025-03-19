@@ -1,4 +1,4 @@
-﻿@model Employee
+﻿@model CreateEmployeeDto
 
 <div class="my-3">
     <label class="col-form-label fw-bold" asp-for="Name"></label>
@@ -49,8 +49,8 @@
 </div>
 
 <div class="my-3">
-    <label class="col-form-label fw-bold" asp-for="Department.Name"></label>
-    <input class="form-control bg-light" asp-for="Department.Name" readonly />
+    <label class="col-form-label fw-bold" asp-for="DepartmentName"></label>
+    <input class="form-control bg-light" asp-for="DepartmentName" readonly />
 </div>
 
 <div class="my-3 form-check">

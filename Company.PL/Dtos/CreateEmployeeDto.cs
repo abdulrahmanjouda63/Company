@@ -26,6 +26,10 @@ namespace Company.PL.Dtos
         public DateTime HiringDate { get; set; }
         [DisplayName("Create At")]
         public DateTime CreateAt { get; set; }
+        [DisplayName("Department")]
         public int? DepartmentId { get; set; }
+        public string? DepartmentName { get; set; }
+        public string? ImageName { get; set; }
+        public IFormFile? Image { get; set; }
     }
 }

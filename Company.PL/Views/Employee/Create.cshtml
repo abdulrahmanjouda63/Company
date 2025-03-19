@@ -8,12 +8,14 @@
 <br />
 
 
-<form asp-action="Create" asp-controller="Employee" enctype="multipart/form-data">
+<form asp-action="Create" enctype="multipart/form-data">
 
 
     <partial name="EmployeePartialView/_CreateEditPartialView" />
-    <input type="submit" class="btn btn-success" value="Submit" /> |
-    <a asp-controller="Employee" asp-action="Index" class="btn btn-light">Back to list</a>
+    <div>
+        <input type="submit" class="btn btn-success" value="Create" /> |
+        <a asp-action="Index" class="btn btn-light">Back to list</a>
+    </div>
 
 </form>
 

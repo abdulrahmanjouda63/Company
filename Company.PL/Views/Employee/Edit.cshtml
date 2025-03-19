@@ -7,11 +7,12 @@
 <br />
 <br />
 
-<form asp-action="Edit" asp-controller="Employee">
+<form asp-action="Edit" enctype="multipart/form-data">
     <partial name="EmployeePartialView/_CreateEditPartialView" />
+    <input asp-for="ImageName" hidden />
     <div>
         <input type="submit" class="btn btn-success" value="Save Changes" /> |
-        <a asp-controller="Employee" asp-action="Index" class="btn btn-secondary">Back to list</a>
+        <a asp-action="Index" class="btn btn-secondary">Back to list</a>
     </div>
 </form>
 

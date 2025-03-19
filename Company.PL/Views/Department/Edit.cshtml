@@ -1,5 +1,5 @@
 ﻿﻿
-@model Department
+@model CreateDepartmentDto
 @{
     ViewData["Title"] = "Edit";
 }
@@ -9,7 +9,6 @@
 <br/>
 
 <form asp-action="Edit" asp-controller="Department">
-    <input  hidden asp-for="Id"/>
     <div class="form-group">
         <label class="col-form-label" asp-for="Code"></label>
         <input class="form-control" asp-for="Code" />

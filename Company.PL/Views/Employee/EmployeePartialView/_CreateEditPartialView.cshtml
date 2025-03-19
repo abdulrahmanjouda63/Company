@@ -1,6 +1,6 @@
 ﻿@model CreateEmployeeDto
 @{
-	var Departments = new SelectList(ViewData["Departments"] as IEnumerable<Department>,"Id","Name");
+	var Departments = new SelectList(ViewData["departments"] as IEnumerable<Department>,"Id","Name");
 }
 <div class="mb-3">
 	<label class="form-label" asp-for="Name"></label>
@@ -49,6 +49,11 @@
 	<input type="datetime-local" class="form-control" asp-for="CreateAt" />
 	<span asp-validation-for="CreateAt" class="text-danger"></span>
 </div>
+
+<div class="mb-3">
+	<label class="col-form-label" asp-for="Image"></label>
+	<input type="file" class="form-control" asp-for="Image" />
+ </div>
 
 <div class="mb-3">
 	<label class="form-label" asp-for="DepartmentId"></label>
