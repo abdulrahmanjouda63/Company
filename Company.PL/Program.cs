@@ -2,8 +2,10 @@ using Company.BLL;
 using Company.BLL.Interfaces;
 using Company.BLL.Repositories;
 using Company.DAL.Data.Contexts;
+using Company.DAL.Models;
 using Company.PL.Mapping;
 using Company.PL.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Company.PL
@@ -24,6 +26,10 @@ namespace Company.PL
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            builder.Services.AddScoped<IScopedService, ScopedService>();
+            builder.Services.AddTransient<ITransientService, TransientService>();
+            builder.Services.AddSingleton<ISingletonService, SingletonService>();
+
             //builder.Services.AddAutoMapper(typeof(EmployeeProfile));
             builder.Services.AddAutoMapper(M => M.AddProfile(new EmployeeProfile()));
 
@@ -32,9 +38,14 @@ namespace Company.PL
             //builder.Services.AddTransient();  // Create Object Life Time Per Operation - Reachable Object
             //builder.Services.AddSingleton();  // Create Object Life Time Per Application
 
-            builder.Services.AddScoped<IScopedService, ScopedService>();
-            builder.Services.AddTransient<ITransientService, TransientService>();
-            builder.Services.AddSingleton<ISingletonService, SingletonService>();
+            builder.Services.AddIdentity<AppUser, IdentityRole>()
+                            .AddEntityFrameworkStores<CompanyDbContext>();
+
+            builder.Services.ConfigureApplicationCookie(config =>
+            {
+                config.LoginPath = "/Account/SignIn";
+
+            });
 
             var app = builder.Build();
 
@@ -51,6 +62,7 @@ namespace Company.PL
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

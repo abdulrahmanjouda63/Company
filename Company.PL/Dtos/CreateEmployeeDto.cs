@@ -7,6 +7,7 @@ namespace Company.PL.Dtos
 {
     public class CreateEmployeeDto
     {
+        public int Id { get; set; }
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
         [Range(18, 60, ErrorMessage = "Age must be between 18 and 60")]
