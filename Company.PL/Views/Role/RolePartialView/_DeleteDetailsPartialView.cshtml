@@ -1,0 +1,13 @@
+﻿@model RoleToReturnDto
+
+<div class="my-3">
+    <label class="col-form-label fw-bold" asp-for="Id"></label>
+    <input class="form-control bg-light" asp-for="Id" readonly />
+    <span asp-validation-for="Id" class="text-danger small"></span>
+</div>
+
+<div class="my-3">
+    <label class="col-form-label fw-bold" asp-for="Name"></label>
+    <input class="form-control bg-light" asp-for="Name" readonly />
+    <span asp-validation-for="Name" class="text-danger small"></span>
+</div>

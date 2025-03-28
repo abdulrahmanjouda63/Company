@@ -1,0 +1,24 @@
+﻿@model UserToReturnDto
+<div class="mb-3">
+	<label class="form-label" asp-for="UserName"></label>
+	<input type="text" class="form-control" asp-for="UserName" placeholder="Enter UserName" />
+	<span asp-validation-for="UserName" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+	<label class="form-label" asp-for="FirstName"></label>
+	<input type="text" class="form-control" asp-for="FirstName" placeholder="Enter FirstName" />
+	<span asp-validation-for="FirstName" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+	<label class="form-label" asp-for="LastName"></label>
+	<input type="text" class="form-control" asp-for="LastName" placeholder="Enter LastName" />
+	<span asp-validation-for="LastName" class="text-danger"></span>
+</div>
+
+<div class="mb-3">
+	<label class="form-label" asp-for="Email"></label>
+	<input type="email" class="form-control" asp-for="Email" placeholder="Enter Email" />
+	<span asp-validation-for="Email" class="text-danger"></span>
+</div>

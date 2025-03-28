@@ -91,21 +91,7 @@
 								@(employee.IsDeleted ? "Deleted" : "Available")
 							</span>
 						</td>
-						<td>
-							<a asp-action="Details" asp-route-id="@employee.Id" class="btn btn-info btn-sm">
-								<i class="fas fa-info-circle"></i> Details
-							</a>
-						</td>
-						<td>
-							<a asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-warning btn-sm">
-								<i class="fas fa-edit"></i> Update
-							</a>
-						</td>
-						<td>
-							<a asp-action="Delete" asp-route-id="@employee.Id" class="btn btn-danger btn-sm">
-								<i class="fas fa-edit"></i> Delete
-							</a>
-						</td>
+						<partial name="_ButtonsPartialView" model="@employee.Id.ToString()" />
 					</tr>
 				}
 			</tbody>

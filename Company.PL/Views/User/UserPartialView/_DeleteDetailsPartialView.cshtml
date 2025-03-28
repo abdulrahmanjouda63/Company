@@ -1,0 +1,25 @@
+﻿@model UserToReturnDto
+
+<div class="my-3">
+    <label class="col-form-label fw-bold" asp-for="UserName"></label>
+    <input class="form-control bg-light" asp-for="UserName" readonly />
+    <span asp-validation-for="UserName" class="text-danger small"></span>
+</div>
+
+<div class="my-3">
+    <label class="col-form-label fw-bold" asp-for="FirstName"></label>
+    <input class="form-control bg-light" asp-for="FirstName" readonly />
+    <span asp-validation-for="FirstName" class="text-danger small"></span>
+</div>
+
+<div class="my-3">
+    <label class="col-form-label fw-bold" asp-for="LastName"></label>
+    <input class="form-control bg-light" asp-for="LastName" readonly />
+    <span asp-validation-for="LastName" class="text-danger small"></span>
+</div>
+
+<div class="my-3">
+    <label class="col-form-label fw-bold" asp-for="Email"></label>
+    <input class="form-control bg-light" asp-for="Email" readonly />
+    <span asp-validation-for="Email" class="text-danger small"></span>
+</div>

@@ -39,7 +39,8 @@ namespace Company.PL
             //builder.Services.AddSingleton();  // Create Object Life Time Per Application
 
             builder.Services.AddIdentity<AppUser, IdentityRole>()
-                            .AddEntityFrameworkStores<CompanyDbContext>();
+                            .AddEntityFrameworkStores<CompanyDbContext>()
+                            .AddDefaultTokenProviders();
 
             builder.Services.ConfigureApplicationCookie(config =>
             {

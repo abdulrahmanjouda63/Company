@@ -36,12 +36,20 @@
 							<a class="nav-link" asp-area="" asp-controller="Employee" asp-action="Index">Employee</a>
 						</li>
 					</ul>
-					<ul>
-					<a class="nav-link btn btn-danger text-white" asp-area="" asp-controller="Account" asp-action="SignOut">
-						SignOut
-					</a>
+					<ul class="navbar-nav flex-grow-1">
+						<li class="nav-item">
+							<a class="nav-link" asp-area="" asp-controller="User" asp-action="Index">Users</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" asp-area="" asp-controller="Role" asp-action="Index">Roles</a>
+						</li>
 					</ul>
-					<ul>
+					<ul class="navbar-nav flex-grow-1">
+						<a class="nav-link btn btn-danger text-white m-3 ms-auto" asp-area="" asp-controller="Account" asp-action="SignOut">
+							SignOut
+						</a>
+					</ul>
+					<ul class="navbar-nav flex-grow-1">
 						<button class="toggle-button" id="toggle-button" onclick="toggleMode()">
 						<i id="mode-icon" class="fas fa-sun"></i>
 						</button>
