@@ -124,6 +124,7 @@ namespace Company.PL.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete([FromRoute] int? id, CreateDepartmentDto model)
         {
             if (ModelState.IsValid)

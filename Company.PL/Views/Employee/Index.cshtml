@@ -22,12 +22,12 @@
 @*     <p>@ViewBag.Message</p> *@
 @* </div> *@
 
-@if (string.IsNullOrEmpty(TempData["Message"] as string))
-{
-	<div class="m-3 alert alert-info">
-		<p>@TempData["Message"]</p>
-	</div>
-}
+
+
+<div class="m-3 alert alert-info">
+	<p>@TempData["Message"]</p>
+</div>
+
 
 <!-- Search Form -->
 <form class="d-flex align-items-center gap-2 mb-3">

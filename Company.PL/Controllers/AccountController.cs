@@ -2,8 +2,13 @@
 using Company.DAL.Models;
 using Company.PL.Dtos;
 using Company.PL.Helpers;
+using MailKit;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Facebook;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using IMailService = Company.PL.Helpers.IMailService;
 
 namespace Company.PL.Controllers
 {
@@ -11,11 +16,14 @@ namespace Company.PL.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        private readonly IMailService _mailService;
+        private readonly ITwilioService _twilioService;
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IMailService mailService, ITwilioService twilioService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _mailService = mailService;
+            _twilioService = twilioService;
         }
         #region SignUp
 
@@ -130,21 +138,42 @@ namespace Company.PL.Controllers
                         Subject = "Reset Password",
                         Body = url
                     };
-                    var flag = EmailSettings.SendEmail(email);
-                    if (flag)
-                    {
-                        return RedirectToAction("CheckYourBox");
-                    }
+                    //var flag = EmailSettings.SendEmail(email);
+
+                    _mailService.SendEmail(email);
+
+                    return RedirectToAction(nameof(CheckYourBox));
                 }
             }
             ModelState.AddModelError("", "Invalid Reset Password Operation !!");
             return View("ForgotPassword");
         }
 
-        [HttpGet]
-        public IActionResult CheckYourBox()
+        [HttpPost]
+        public async Task<IActionResult> SendResetPasswordSms(ForgetPasswordDto model)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user is not null)
+                {
+
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    var url = Url.Action("ResetPassword", "Account", new { email = model.Email, token }, Request.Scheme);
+
+                    var sms = new Sms()
+                    {
+                        To = user.PhoneNumber,
+                        Body = url
+                    };
+
+                    _twilioService.SendSms(sms);
+
+                    return RedirectToAction(nameof(CheckYourPhone));
+                }
+            }
+            ModelState.AddModelError("", "Invalid Reset Password Operation !!");
+            return View("ForgotPassword");
         }
 
         #endregion
@@ -183,5 +212,67 @@ namespace Company.PL.Controllers
 
         #endregion
 
+        [HttpGet]
+        public IActionResult CheckYourBox()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult CheckYourPhone()
+        {
+            return View();
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+        public IActionResult GoogleLogin()
+        {
+            var prop = new AuthenticationProperties()
+            {
+                RedirectUri = Url.Action(nameof(GoogleResponse))
+            };
+            return Challenge(prop, GoogleDefaults.AuthenticationScheme);
+        }
+
+        public async Task<IActionResult> GoogleResponse()
+        {
+            var result = await HttpContext.AuthenticateAsync(GoogleDefaults.AuthenticationScheme);
+            var claims = result.Principal.Identities.FirstOrDefault().Claims.Select(
+                claim => new{
+
+                    claim.Issuer,
+                    claim.OriginalIssuer,
+                    claim.Type,
+                    claim.Value
+                });
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult FacebookLogin()
+        {
+            var prop = new AuthenticationProperties()
+            {
+                RedirectUri = Url.Action(nameof(FacebookResponse))
+            };
+            return Challenge(prop, FacebookDefaults.AuthenticationScheme);
+        }
+
+        public async Task<IActionResult> FacebookResponse()
+        {
+            var result = await HttpContext.AuthenticateAsync(FacebookDefaults.AuthenticationScheme);
+            var claims = result.Principal.Identities.FirstOrDefault().Claims.Select(
+                claim => new{
+                    claim.Issuer,
+                    claim.OriginalIssuer,
+                    claim.Type,
+                    claim.Value
+                });
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

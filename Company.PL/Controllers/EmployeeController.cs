@@ -56,6 +56,31 @@ namespace Company.PL.Controllers
                 return View(employees);
         }
 
+        public async Task<IActionResult> Search(string? SearchInput)
+        {
+            IEnumerable<Employee> employees;
+            if (string.IsNullOrEmpty(SearchInput))
+            {
+                employees = await _unitOfWork.EmployeeRepository.GetAllAsync();
+            }
+            else {
+                employees = await _unitOfWork.EmployeeRepository.GetByNameAsync(SearchInput);
+            }
+
+            // Dictionary    : 3 Properties
+            // 1. ViewData   : Transfer Extra Information From Controller (Action) To View
+
+            //ViewData["Message"] = "Hello From ViewData";
+
+            // 2. ViewBag    : Transfer Extra Information From Controller (Action) To View
+
+            //ViewBag.Message = "Hello From ViewBag";
+
+            // 3. TempData   :
+
+            return PartialView("/Views/Employee/EmployeePartialView/EmployeesTablePartialView.cshtml", employees);
+        }
+
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -159,6 +184,7 @@ namespace Company.PL.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete([FromRoute] int id, CreateEmployeeDto model)
         {
             if (ModelState.IsValid)

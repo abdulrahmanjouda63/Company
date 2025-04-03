@@ -15,7 +15,7 @@ namespace Company.PL.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string? SearchInput)
+        public IActionResult Index(string? SearchInput)
         {
             IEnumerable<UserToReturnDto> users;
             if (string.IsNullOrEmpty(SearchInput))

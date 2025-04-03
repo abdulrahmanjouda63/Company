@@ -7,9 +7,23 @@
 <div class="main-agileinfo">
 	<div class="agileits-top">
 		<div asp-validation-summary="All" class="text-danger alert alert-danger"></div>
-		<form asp-action="SignIn">
-			<input class="text email" asp-for="Email" placeholder="Email" required="">
-			<input class="text" asp-for="Password" placeholder="Password" required="">
+		<form asp-action="SignIn" class="p-4 border rounded shadow-sm">
+			<div class="mb-3">
+				<label asp-for="Email" class="form-label fw-bold">Email</label>
+				<div class="input-group">
+					<span class="input-group-text"><i class="fas fa-envelope"></i></span>
+					<input type="email" class="form-control" asp-for="Email" placeholder="Enter your email" required>
+				</div>
+			</div>
+
+			<!-- Password Input -->
+			<div class="mb-3">
+				<label asp-for="Password" class="form-label fw-bold">Password</label>
+				<div class="input-group">
+					<span class="input-group-text"><i class="fas fa-lock"></i></span>
+					<input type="password" class="form-control" asp-for="Password" placeholder="Enter your password" required>
+				</div>
+			</div>
 			<div class="wthree-text">
 				<label class="anim">
 					<input asp-for="RememberMe" class="checkbox">
@@ -17,10 +31,33 @@
 				</label>
 				<div class="clear"> </div>
 			</div>
-			<input type="submit" value="SIGNIN">
+			<button type="submit" class="btn btn-primary w-100">
+				<i class="fas fa-sign-in-alt"></i> Sign In
+			</button>
 		</form>
-		<p>Don't have an Account? <a asp-action="SignUp"> SignUp Now!</a></p>
-		<p><a asp-action="ForgotPassword">Forgot Password</a></p>
+		<div class="text-center mt-3">
+			<a asp-action="GoogleLogin" class="btn btn-danger text-white px-4 py-2">
+				<i class="fab fa-google me-2"></i> Login with Google
+			</a>
+		</div>
+
+		<div class="text-center mt-3">
+			<a asp-action="FacebookLogin" class="btn btn-primary text-white px-4 py-2">
+				<i class="fab fa-facebook-f me-2"></i> Login with Facebook
+			</a>
+		</div>
+
+		<p class="text-center mt-3">
+			Don't have an account?
+			<a asp-action="SignUp" class="fw-bold text-primary text-decoration-none">Sign Up Now!</a>
+		</p>
+
+		<p class="text-center">
+			<a asp-action="ForgotPassword" class="text-danger text-decoration-none">
+				<i class="fas fa-key me-1"></i> Forgot Password?
+			</a>
+		</p>
+
 	</div>
 </div>
 
