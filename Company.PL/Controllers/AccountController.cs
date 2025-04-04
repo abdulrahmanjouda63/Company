@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
 using Company.DAL.Models;
 using Company.PL.Dtos;
 using Company.PL.Helpers;
@@ -90,9 +91,17 @@ namespace Company.PL.Controllers
                     if (flag)
                     {
                         var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
+                        if (result.IsLockedOut)
+                        {
+                            ModelState.AddModelError("", "User Is Locked Out");
+                        }
                         if (result.Succeeded)
                         {
                             return RedirectToAction(nameof(HomeController.Index), "Home");
+                        }
+                        if (result.IsNotAllowed)
+                        {
+                            ModelState.AddModelError("", "User Is Not Allowed");
                         }
                     }
                 }
@@ -100,6 +109,82 @@ namespace Company.PL.Controllers
             }
             return View(model);
         }
+        [HttpGet]
+        public IActionResult GoogleLogin()
+        {
+            var prop = new AuthenticationProperties()
+            {
+                RedirectUri = Url.Action(nameof(GoogleResponse))
+            };
+            return Challenge(prop, GoogleDefaults.AuthenticationScheme);
+        }
+        [HttpGet]
+        public async Task<IActionResult> GoogleResponse()
+        {
+            var result = await HttpContext.AuthenticateAsync(GoogleDefaults.AuthenticationScheme);
+            var claims = result.Principal.Identities.FirstOrDefault().Claims.Select(
+                claim => new {
+                    claim.Issuer,
+                    claim.OriginalIssuer,
+                    claim.Type,
+                    claim.Value
+                });
+
+            var email = claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                user = new AppUser
+                {
+                    UserName = email,
+                    Email = email,
+                    FirstName = claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName)?.Value,
+                    LastName = claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value
+                };
+                await _userManager.CreateAsync(user);
+            }
+            else
+            {
+                user.FirstName = claims.FirstOrDefault(c => c.Type == ClaimTypes.GivenName)?.Value;
+                user.LastName = claims.FirstOrDefault(c => c.Type == ClaimTypes.Surname)?.Value;
+                await _userManager.UpdateAsync(user);
+            }
+
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            return RedirectToAction("Index", "Home");
+        }
+
+        //public IActionResult FacebookLogin()
+        //{
+        //    var prop = new AuthenticationProperties()
+        //    {
+        //        RedirectUri = Url.Action(nameof(FacebookResponse))
+        //    };
+        //    return Challenge(prop, FacebookDefaults.AuthenticationScheme);
+        //}
+
+        //public async Task<IActionResult> FacebookResponse()
+        //{
+        //    var result = await HttpContext.AuthenticateAsync(FacebookDefaults.AuthenticationScheme);
+        //    var claims = result.Principal.Identities.FirstOrDefault().Claims.Select(
+        //        claim => new {
+        //            claim.Issuer,
+        //            claim.OriginalIssuer,
+        //            claim.Type,
+        //            claim.Value
+        //        });
+
+        //    var user = await _userManager.GetUserAsync(User);
+        //    if (user != null)
+        //    {
+        //        user.FirstName = claims.FirstOrDefault(c => c.Type == "first_name")?.Value;
+        //        user.LastName = claims.FirstOrDefault(c => c.Type == "last_name")?.Value;
+        //        await _userManager.UpdateAsync(user);
+        //    }
+
+        //    return RedirectToAction("Index", "Home");
+        //}
 
         #endregion
 
@@ -107,10 +192,19 @@ namespace Company.PL.Controllers
 
         [HttpGet]
         public new async Task<IActionResult> SignOut()
+
         {
+
             await _signInManager.SignOutAsync();
+
+            await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
+
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
             return RedirectToAction(nameof(SignIn));
+
         }
+
 
         #endregion
 
@@ -228,51 +322,6 @@ namespace Company.PL.Controllers
             return View();
         }
 
-        public IActionResult GoogleLogin()
-        {
-            var prop = new AuthenticationProperties()
-            {
-                RedirectUri = Url.Action(nameof(GoogleResponse))
-            };
-            return Challenge(prop, GoogleDefaults.AuthenticationScheme);
-        }
 
-        public async Task<IActionResult> GoogleResponse()
-        {
-            var result = await HttpContext.AuthenticateAsync(GoogleDefaults.AuthenticationScheme);
-            var claims = result.Principal.Identities.FirstOrDefault().Claims.Select(
-                claim => new{
-
-                    claim.Issuer,
-                    claim.OriginalIssuer,
-                    claim.Type,
-                    claim.Value
-                });
-
-            return RedirectToAction("Index", "Home");
-        }
-
-        public IActionResult FacebookLogin()
-        {
-            var prop = new AuthenticationProperties()
-            {
-                RedirectUri = Url.Action(nameof(FacebookResponse))
-            };
-            return Challenge(prop, FacebookDefaults.AuthenticationScheme);
-        }
-
-        public async Task<IActionResult> FacebookResponse()
-        {
-            var result = await HttpContext.AuthenticateAsync(FacebookDefaults.AuthenticationScheme);
-            var claims = result.Principal.Identities.FirstOrDefault().Claims.Select(
-                claim => new{
-                    claim.Issuer,
-                    claim.OriginalIssuer,
-                    claim.Type,
-                    claim.Value
-                });
-
-            return RedirectToAction("Index", "Home");
-        }
     }
 }

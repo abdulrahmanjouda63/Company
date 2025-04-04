@@ -7,6 +7,7 @@ using Company.PL.Helpers;
 using Company.PL.Mapping;
 using Company.PL.Services;
 using Company.PL.Settings;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
@@ -18,89 +19,92 @@ namespace Company.PL
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            WebApplicationBuilder Builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddControllersWithViews(); // Register built-in MVC services
-            //builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>(); // Allow DI For DepartmentRepository
-            //builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>(); // Allow DI For EmployeeRepository
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); // Allow DI For UnitOfWork
-            builder.Services.AddDbContext<CompanyDbContext>(options =>
-            {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-            });
 
-            builder.Services.AddScoped<IScopedService, ScopedService>();
-            builder.Services.AddTransient<ITransientService, TransientService>();
-            builder.Services.AddSingleton<ISingletonService, SingletonService>();
-
-            //builder.Services.AddAutoMapper(typeof(EmployeeProfile));
-            builder.Services.AddAutoMapper(M => M.AddProfile(new EmployeeProfile()));
-
-            builder.Services.Configure<MailSettings>(builder.Configuration.GetSection(nameof(MailSettings)));
-            builder.Services.AddScoped<IMailService, MailService>();
-            builder.Services.Configure<TwilioSettings>(builder.Configuration.GetSection(nameof(TwilioSettings)));
-            builder.Services.AddScoped<ITwilioService, TwilioService>();
-            // Life Time
-            //builder.Services.AddScoped();     // Create Object Life Time Per Request - Unreachable Object
-            //builder.Services.AddTransient();  // Create Object Life Time Per Operation - Reachable Object
-            //builder.Services.AddSingleton();  // Create Object Life Time Per Application
-
-            builder.Services.AddIdentity<AppUser, IdentityRole>()
+            Builder.Services.AddIdentity<AppUser, IdentityRole>()
                             .AddEntityFrameworkStores<CompanyDbContext>()
                             .AddDefaultTokenProviders();
 
-            builder.Services.ConfigureApplicationCookie(config =>
+            Builder.Services.ConfigureApplicationCookie(options =>
             {
-                config.LoginPath = "/Account/SignIn";
-                //config.LogoutPath = "/Home/SignIn";
-                //config.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-                //config.AccessDeniedPath = "/Account/AccessDenied";
-
+                options.LoginPath = "/Account/SignIn";
+                options.LogoutPath = "/Account/SignOut";
+                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
             });
 
-            builder.Services.AddAuthentication(o => {
-                o.DefaultAuthenticateScheme = GoogleDefaults.AuthenticationScheme;
-                o.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+            Builder.Services.AddAuthentication(options =>
+            {
+                //options.DefaultAuthenticateScheme = GoogleDefaults.AuthenticationScheme;
+                options.DefaultScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+                options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
             }).AddGoogle(o =>
             {
-                o.ClientId = builder.Configuration["Authentication:Google:ClientId"];
-                o.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+                o.ClientId = Builder.Configuration["Authentication:Google:ClientId"];
+                o.ClientSecret = Builder.Configuration["Authentication:Google:ClientSecret"];
             });
 
-            builder.Services.AddAuthentication(o =>
-            {
-                o.DefaultAuthenticateScheme = FacebookDefaults.AuthenticationScheme;
-                o.DefaultChallengeScheme = FacebookDefaults.AuthenticationScheme;
-            }).AddFacebook(o =>
-            {
-                o.AppId = builder.Configuration["Authentication:Facebook:AppId"];
-                o.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
-            });
+            //Builder.Services.AddAuthentication(options =>
+            //{
+            //    options.DefaultScheme = IdentityConstants.ApplicationScheme;
+            //    options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+            //    options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+            //})
+            //.AddFacebook(o =>
+            //{
+            //    o.AppId = Builder.Configuration["Authentication:Facebook:AppId"];
+            //    o.AppSecret = Builder.Configuration["Authentication:Facebook:AppSecret"];
+            //});
 
-            var app = builder.Build();
+            // 2. Register Database Context
+            Builder.Services.AddDbContext<CompanyDbContext>(options =>
+                options.UseSqlServer(Builder.Configuration.GetConnectionString("DefaultConnection"))
+            );
 
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
+            // 3. Register Repositories & Services
+            Builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            Builder.Services.AddScoped<IScopedService, ScopedService>();
+            Builder.Services.AddTransient<ITransientService, TransientService>();
+            Builder.Services.AddSingleton<ISingletonService, SingletonService>();
+
+            // 4. Configure Mail & Twilio Services
+            Builder.Services.Configure<MailSettings>(Builder.Configuration.GetSection(nameof(MailSettings)));
+            Builder.Services.AddScoped<IMailService, MailService>();
+            Builder.Services.Configure<TwilioSettings>(Builder.Configuration.GetSection(nameof(TwilioSettings)));
+            Builder.Services.AddScoped<ITwilioService, TwilioService>();
+
+            // 5. Register AutoMapper
+            Builder.Services.AddAutoMapper(config => config.AddProfile(new EmployeeProfile()));
+
+            // 6. Register MVC Controllers
+            Builder.Services.AddControllersWithViews();
+
+            WebApplication App = Builder.Build();
+
+            // 7. Middleware Configuration
+            if (!App.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                App.UseExceptionHandler("/Home/Error");
+                App.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            App.UseHttpsRedirection();
+            App.UseStaticFiles();
+            App.UseRouting();
+            App.UseAuthentication();
+            App.UseAuthorization();
 
-            app.UseRouting();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.MapControllerRoute(
+            // 8. Define Default Route
+            App.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Index}/{id?}"
+            );
 
-            app.Run();
+            App.Run();
         }
+
+
     }
 }

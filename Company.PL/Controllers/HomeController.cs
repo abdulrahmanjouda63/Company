@@ -4,6 +4,8 @@ using Company.PL.Models;
 using Company.PL.Services;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using Company.DAL.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Company.PL.Controllers;
 [Authorize]
@@ -16,6 +18,7 @@ public class HomeController : Controller
     private readonly ITransientService transientService02;
     private readonly ISingletonService singletonService01;
     private readonly ISingletonService singletonService02;
+    private readonly UserManager<AppUser> _userManager;
 
     public HomeController(
         ILogger<HomeController> logger,
@@ -24,7 +27,8 @@ public class HomeController : Controller
         ITransientService transientService01,
         ITransientService transientService02,
         ISingletonService singletonService01,
-        ISingletonService singletonService02
+        ISingletonService singletonService02,
+        UserManager<AppUser> userManager
         )
     {
         _logger = logger;
@@ -34,6 +38,7 @@ public class HomeController : Controller
         this.transientService02 = transientService02;
         this.singletonService01 = singletonService01;
         this.singletonService02 = singletonService02;
+        _userManager = userManager;
     }
 
     public string TestLifeTime()
@@ -49,8 +54,11 @@ public class HomeController : Controller
         return builder.ToString();
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
+        var user = await _userManager.GetUserAsync(User);
+        ViewBag.FirstName = user?.FirstName;
+        ViewBag.LastName = user?.LastName;
         return View();
     }
 
