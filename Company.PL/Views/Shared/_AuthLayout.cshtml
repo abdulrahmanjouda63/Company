@@ -1,53 +1,40 @@
-﻿<!--
-Author: Colorlib
-Author URL: https://colorlib.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
+﻿
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Creative @ViewData["Title"] Form</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+	<meta charset="UTF-8">
 	<!-- Custom Theme files -->
-	<link href="~/css/AuthStyle.css" rel="stylesheet" type="text/css" media="all" />
+
 	<!-- //Custom Theme files -->
 	<!-- web font -->
-	<link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+	<link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css'>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-	<link rel="stylesheet" href="~/css/DarkModeStyle.css" asp-append-version="true" />
+	<link href="~/css/AuthStyle.css" rel="stylesheet" type="text/css" media="all" />
 	<link rel="stylesheet" href="~/Company.PL.styles.css" asp-append-version="true" />
 	<!-- //web font -->
 </head>
 <body>
-	<!-- main -->
-	<div class="main-w3layouts wrapper">
-		<h1>Creative @ViewData["Title"] Form</h1>
-		@RenderBody()
-		<!-- copyright -->
-		<div class="colorlibcopy-agile">
-			<p>© 2018 @ViewData["Title"] Form. All rights reserved | Design by <a href="https://colorlib.com/" target="_blank">Colorlib</a></p>
+	<section class="grid-background">
+		<div class="grid-overlay"></div>
+		<!-- Grid cells will be added via JavaScript -->
+	</section>
+
+	<!-- partial:index.partial.html -->
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-12 col-md-10 col-lg-8">
+				<div class="fullfrom">
+					@RenderBody()
+				</div>
+			</div>
 		</div>
-		<!-- //copyright -->
-		<ul class="colorlib-bubbles">
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-		</ul>
 	</div>
-	<!-- //main -->
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/js/script1.js"></script>
+	<script src="~/js/script2.js"></script>
 	@await RenderSectionAsync("ValidationSection", required: false)
 </body>
 </html>

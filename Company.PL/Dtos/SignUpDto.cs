@@ -15,6 +15,7 @@ namespace Company.PL.Dtos
         public string Email { get; set; }
         [Required(ErrorMessage = "Password is Required !!")]
         [DataType(DataType.Password)]
+        public string PhoneNumber { get; set; }
         public string Password { get; set; }
         [Required(ErrorMessage = "ConfirmPassword is Required !!")]
         [DataType(DataType.Password)]

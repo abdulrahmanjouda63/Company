@@ -3,49 +3,93 @@
 
 // Write your JavaScript code.
 document.addEventListener("DOMContentLoaded", function () {
+
 	const toggleButton = document.querySelector(".toggle-button");
+
 	const body = document.body;
+
 	const icon = document.getElementById("mode-icon");
+
 	const navLinks = document.querySelectorAll(".nav-link");
+
 	const navBrand = document.querySelector(".navbar-brand");
 
+
 	function updateColors() {
+
 		if (body.classList.contains("dark-mode")) {
-			navLinks.forEach(link => link.style.color = "#e0e0e0");
-			if (navBrand) navBrand.style.color = "#ffcc00";
+
+			body.style.backgroundColor = "#1E1E2D"; /* Deep charcoal with blue touch */
+
+			body.style.color = "#E0E0E0"; /* Soft white text */
+
+			navLinks.forEach(link => link.style.color = "#4A90E2"); /* Soft neon blue for links */
+
+			if (navBrand) navBrand.style.color = "#FFEB3B"; /* Gold color for brand */
+
 		} else {
-			navLinks.forEach(link => link.style.color = "#222");
-			if (navBrand) navBrand.style.color = "#ff6600";
+
+			body.style.backgroundColor = "#FAF3F0"; /* Light ivory background */
+
+			body.style.color = "#333333"; /* Dark gray text */
+
+			navLinks.forEach(link => link.style.color = "#FF7043"); /* Coral color for links */
+
+			if (navBrand) navBrand.style.color = "#FF5722"; /* Dark coral for brand */
+
 		}
+
 	}
 
-	// Load mode from local storage
+
+	// Load mode from local storage
+
 	if (localStorage.getItem("theme") === "dark") {
+
 		body.classList.add("dark-mode");
+
 		body.classList.remove("light-mode");
+
 		icon.classList.replace("fa-sun", "fa-moon");
+
 	} else {
+
 		body.classList.add("light-mode");
+
 		body.classList.remove("dark-mode");
+
 		icon.classList.replace("fa-moon", "fa-sun");
+
 	}
+
 	updateColors();
 
+
 	toggleButton.addEventListener("click", function () {
+
 		body.classList.toggle("dark-mode");
+
 		body.classList.toggle("light-mode");
 
+
 		if (body.classList.contains("dark-mode")) {
+
 			icon.classList.replace("fa-sun", "fa-moon");
+
 			localStorage.setItem("theme", "dark");
+
 		} else {
+
 			icon.classList.replace("fa-moon", "fa-sun");
+
 			localStorage.setItem("theme", "light");
+
 		}
+
 		updateColors();
+
 	});
 });
-
 
 $(document).ready(function () {
 const searchBar = $('#SearchInput');
@@ -66,4 +110,5 @@ searchBar.on('keyup', function (event) {
 		}
 	});
 });
-	});
+});
+

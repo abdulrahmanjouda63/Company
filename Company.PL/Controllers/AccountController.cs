@@ -51,6 +51,7 @@ namespace Company.PL.Controllers
                             FirstName = model.FirstName,
                             LastName = model.LastName,
                             Email = model.Email,
+                            PhoneNumber = model.PhoneNumber,
                         };
                         var result = await _userManager.CreateAsync(user, model.Password);
                         if (result.Succeeded)
