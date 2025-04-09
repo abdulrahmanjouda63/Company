@@ -45,20 +45,71 @@ body {
         opacity: 0.6;
     }
 
+/* Grid Cell Styling */
 .grid-cell {
     position: relative;
     display: block;
     width: calc(6.25vw - 2px);
     height: calc(6.25vw - 2px);
-    background: #181818;
+    background: rgba(24, 24, 24, 0.4); /* Transparent dark background */
     z-index: 2;
-    transition: background 0.3s ease, transform 0.3s ease; /* Smoother hover and potential future transform */
+    border-radius: 12px; /* Soft, rounded corners */
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth transition for all properties */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Subtle shadow for depth */
+    overflow: hidden; /* Keeps content within bounds, especially for effects */
+    transform: scale(1);
+    cursor: pointer; /* Pointer cursor for interactivity */
+    filter: brightness(1.1); /* Slight brightness for the initial state */
 }
 
+    /* Hover Effects */
     .grid-cell:hover {
-        background: rgb(20, 180, 255);
-        transform: scale(1.1); /* Subtle scale on hover */
+        background: rgba(20, 180, 255, 0.8); /* Transparent blue gradient on hover */
+        transform: scale(1.15) rotate(5deg); /* Enhanced scale and stronger rotation for depth */
+        box-shadow: 0 16px 24px rgba(0, 180, 255, 0.6); /* Stronger, more vibrant shadow */
+        filter: brightness(1.4) contrast(1.3); /* Brightness and contrast boost for a glowing effect */
+        z-index: 3; /* Ensure it's above other content during hover */
     }
+
+    /* Active (Click) State */
+    .grid-cell:active {
+        transform: scale(1.05) rotate(1deg); /* Slight shrink and minimal rotation for feedback */
+        box-shadow: 0 8px 16px rgba(0, 180, 255, 0.8); /* Slight shadow decrease to indicate click */
+        filter: brightness(1.2); /* Brightness boost during click */
+    }
+
+    /* Hover Animation for Glowing Effect */
+    .grid-cell:hover::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 300%;
+        height: 300%;
+        background: rgba(20, 180, 255, 0.4); /* Transparent glowing effect */
+        border-radius: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        animation: glowEffect 1.5s infinite ease-out;
+        z-index: -1;
+    }
+
+/* Glowing Animation */
+@keyframes glowEffect {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0.5;
+    }
+}
 
 @keyframes animateBackground {
     0% {
