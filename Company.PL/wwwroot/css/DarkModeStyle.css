@@ -1,274 +1,307 @@
-﻿/* General Light Mode */
+﻿/* General Light Mode - Ethereal Glow */
 .light-mode {
-    background-color: #FAF9F6; /* Soft off-white background */
-    color: #4A4A4A; /* Muted dark gray text */
-    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+    background-color: #f0f8ff; /* Alice Blue - soft and airy */
+    color: #333; /* Deep charcoal for contrast */
+    transition: background-color 0.7s cubic-bezier(0.645, 0.045, 0.355, 1), color 0.7s cubic-bezier(0.645, 0.045, 0.355, 1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05); /* Subtle lift */
 }
 
-/* General Dark Mode */
+/* General Dark Mode - Deep Space */
 .dark-mode {
-    background-color: #181818; /* Dark gray background */
-    color: #E0E0E0; /* Soft off-white text */
-    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+    background-color: #0c0c1d; /* Deep, almost black blue */
+    color: #f8f8ff; /* Ghost White - crisp and clean */
+    transition: background-color 0.7s cubic-bezier(0.645, 0.045, 0.355, 1), color 0.7s cubic-bezier(0.645, 0.045, 0.355, 1);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.05); /* Subtle reverse lift */
 }
 
-/* Glassmorphism Navbar */
+/* Glassmorphism Navbar - Aurora Borealis */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
-    background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent background */
+    padding: 20px 30px; /* More breathing room */
+    background-color: rgba(255, 255, 255, 0.5); /* More pronounced transparency */
     color: #fff;
-    backdrop-filter: blur(10px); /* Blur effect */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Soft shadow for depth */
-    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+    backdrop-filter: blur(15px) saturate(150%); /* Richer blur and color boost */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25); /* Enhanced shadow */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+    transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out, box-shadow 0.6s ease-in-out, border-color 0.6s ease-in-out;
 }
 
-/* Dark Mode Navbar */
+/* Dark Mode Navbar - Cosmic Dust */
 .dark-mode .navbar {
-    background-color: #2A2A2A; /* Dark gray navbar */
-    color: #FFEB3B; /* Warm golden tone for text */
-    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+    background-color: rgba(40, 40, 60, 0.6); /* Darker, moodier glass */
+    color: #ffe082; /* Light goldenrod yellow - celestial */
+    box-shadow: 0 6px 15px rgba(255, 255, 255, 0.15); /* Reverse shadow */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Neon Effects for Navbar Links */
-.navbar-brand, .nav-link {
-    font-size: 18px;
+/* Neon Effects for Navbar Links - Electric Flow */
+.navbar-brand,
+.nav-link {
+    font-size: 20px; /* Slightly larger */
     text-decoration: none;
-    color: #4A90E2; /* Soft teal for links */
-    transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
+    color: #64b5f6; /* Light blue - energetic */
+    transition: color 0.2s ease-in-out, text-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
     position: relative;
+    letter-spacing: 0.5px; /* Subtle spacing */
 }
 
-/* Neon Glow Effect for Text */
-.navbar-brand, .nav-link {
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.6), 0 0 10px rgba(255, 255, 255, 0.6), 0 0 15px rgba(255, 255, 255, 0.6);
+/* Intense Neon Glow Effect for Text */
+.navbar-brand,
+.nav-link {
+    text-shadow: 0 0 8px #bbdefb, 0 0 15px #90caf9, 0 0 25px #64b5f6; /* Layered glow */
 }
 
-    /* Hover Effect for Navbar Links */
-    .navbar-brand:hover, .nav-link:hover {
-        color: #58A6FF; /* Softer blue for hover effect */
-        text-shadow: 0 0 20px rgba(255, 0, 255, 1), 0 0 30px rgba(255, 0, 255, 0.9), 0 0 40px rgba(255, 0, 255, 0.7);
+    /* Dynamic Hover Effect for Navbar Links - Surge */
+    .navbar-brand:hover,
+    .nav-link:hover {
+        color: #42a5f5; /* Deeper blue on hover */
+        text-shadow: 0 0 12px #e1bee7, 0 0 20px #ce93d8, 0 0 30px #ba68c8; /* Magenta surge */
+        transform: translateY(-2px); /* Subtle vertical lift */
     }
 
-/* SignOut Button */
+/* Sleek SignOut Button - Crimson Pulse */
 .navbar .nav-item .btn-danger {
-    background-color: rgba(255, 0, 0, 0.6); /* Semi-transparent red */
+    background-color: rgba(220, 20, 60, 0.7); /* Crimson - bold */
     color: #fff;
-    border: 2px solid #ff0000;
-    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    text-shadow: 0 0 5px rgba(255, 0, 0, 0.6);
+    border: 2px solid #dc143c;
+    border-radius: 8px; /* Slightly rounded */
+    padding: 12px 20px; /* More substantial */
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+    text-shadow: 0 0 6px rgba(220, 20, 60, 0.8);
 }
 
-    /* Hover Effect for SignOut Button */
+    /* Enhanced Hover Effect for SignOut Button - Blazing */
     .navbar .nav-item .btn-danger:hover {
         background-color: rgba(255, 0, 0, 1);
-        box-shadow: 0 0 15px rgba(255, 0, 0, 1), 0 0 25px rgba(255, 0, 0, 1);
-        text-shadow: 0 0 15px rgba(255, 0, 0, 1), 0 0 20px rgba(255, 0, 0, 0.8);
+        box-shadow: 0 0 18px rgba(255, 0, 0, 1), 0 0 30px rgba(255, 0, 0, 0.9);
+        text-shadow: 0 0 18px rgba(255, 0, 0, 1), 0 0 25px rgba(255, 0, 0, 0.8);
+        transform: scale(1.05); /* Gentle scale up */
     }
 
-/* Toggle Mode Button */
+/* Futuristic Toggle Mode Button - Cyberpunk */
 .toggle-button {
-    font-size: 24px;
+    font-size: 28px; /* More prominent */
     cursor: pointer;
     border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    background: #FF7043; /* Warm coral */
-    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, transform 0.5s ease-in-out;
+    padding: 12px 18px;
+    border-radius: 12px; /* More defined */
+    background: #ff6f00; /* Vivid orange */
+    color: #fff;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), box-shadow 0.3s ease-in-out;
     display: flex;
     align-items: center;
     justify-content: center;
     outline: none;
-    box-shadow: 0 0 10px rgba(255, 102, 0, 0.5);
+    box-shadow: 0 0 15px rgba(255, 111, 0, 0.7);
 }
 
-    /* Hover Effect for Toggle Mode Button */
+    /* Dynamic Hover Effect for Toggle Mode Button - Glitch */
     .toggle-button:hover {
-        transform: scale(1.2) rotate(360deg);
-        box-shadow: 0 0 20px rgba(255, 102, 0, 0.8);
+        transform: scale(1.1) rotate(15deg); /* Angled scale */
+        background-color: #f57c00; /* Slightly darker */
+        box-shadow: 0 0 25px rgba(255, 111, 0, 0.9), 0 0 5px #fff; /* Added white inner glow */
     }
 
-/* Light Mode Toggle Button */
+/* Light Mode Toggle Button - Solar Flare */
 .light-mode .toggle-button {
-    background: #ffcc00;
-    color: #ff6600;
+    background: #ffd740; /* Gold - radiant */
+    color: #212121; /* Dark gray for contrast */
+    box-shadow: 0 0 18px rgba(255, 215, 64, 0.8);
 }
 
-/* Dark Mode Toggle Button */
+/* Dark Mode Toggle Button - Deep Abyss Pulse */
 .dark-mode .toggle-button {
-    background: #444;
-    color: #ffcc00;
-    animation: pulse 1s infinite alternate;
+    background: #303030; /* Darker gray */
+    color: #ffd740;
+    animation: deepPulse 1.2s infinite alternate cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 0 12px rgba(255, 215, 64, 0.6);
 }
 
-@keyframes pulse {
+@keyframes deepPulse {
     from {
-        box-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
+        box-shadow: 0 0 12px rgba(255, 215, 64, 0.6);
+        transform: scale(1);
     }
 
     to {
-        box-shadow: 0 0 20px rgba(255, 204, 0, 1);
+        box-shadow: 0 0 25px rgba(255, 215, 64, 0.9), 0 0 5px #fff;
+        transform: scale(1.08);
     }
 }
 
-/* Links Style */
+/* Links Style - Modern Underline Reveal */
 .light-mode .nav-link {
-    color: #222;
+    color: #2c3e50; /* Dark slate gray */
 }
 
 .dark-mode .nav-link {
-    color: #00B8D4;
+    color: #81d4fa; /* Light sky blue */
 }
 
 .nav-links {
     display: flex;
-    gap: 15px;
+    gap: 20px; /* Slightly more space */
 }
 
 .nav-link {
     text-decoration: none;
-    font-size: 18px;
-    padding: 10px;
-    transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+    font-size: 19px;
+    padding: 10px 15px; /* Added horizontal padding */
+    transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
     position: relative;
 }
 
-    /* Hover Effect for Navbar Links */
-    .nav-link:hover {
-        transform: scale(1.1);
-    }
-
-    .nav-link::after {
+    /* Animated Underline on Hover */
+    .nav-link::before {
         content: "";
         position: absolute;
-        left: 50%;
-        bottom: 0;
-        width: 0;
-        height: 3px;
-        background-color: currentColor;
-        transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
-    }
-
-    .nav-link:hover::after {
-        width: 100%;
         left: 0;
+        bottom: -3px; /* Adjust position */
+        width: 100%;
+        height: 2px;
+        background-color: currentColor;
+        transform: scaleX(0);
+        transform-origin: left center;
+        transition: transform 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
     }
 
-/* Table Styles with Glassmorphism and Neon Effects */
-/* Table Styles with Glassmorphism and Neon Effects */
+    .nav-link:hover {
+        transform: translateY(-1px); /* Tiny lift on hover */
+    }
+
+        .nav-link:hover::before {
+            transform: scaleX(1);
+        }
+
+/* Table Styles with Advanced Glassmorphism and Dynamic Neon */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
-    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, opacity 0.5s ease-in-out;
-    opacity: 1;
-    background-color: rgba(255, 255, 255, 0.1); /* Glassmorphism effect */
-    backdrop-filter: blur(10px); /* Blur effect */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
-    border-radius: 10px;
+    margin: 30px 0; /* More margin */
+    transition: background-color 0.6s ease-in-out, color 0.6s ease-in-out, opacity 0.6s ease-in-out, box-shadow 0.4s ease-in-out;
+    opacity: 0.95; /* Slightly less transparent */
+    background-color: rgba(255, 255, 255, 0.15); /* Richer glass */
+    backdrop-filter: blur(18px) saturate(130%); /* More intense blur */
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2); /* Deeper shadow */
+    border-radius: 12px;
+    overflow: hidden; /* Clips inner rounded corners */
 }
 
-/* Neon Glow for Table Headings with vibrant colors */
+/* Vibrant Neon Glow for Table Headings - Electric Teal */
 th {
-    background-color: rgba(0, 255, 255, 0.2); /* Cyan background with glow */
+    background-color: rgba(0, 188, 212, 0.3); /* Teal with stronger glow */
     color: #fff;
-    text-shadow: 0 0 5px rgba(0, 255, 255, 0.6), 0 0 10px rgba(0, 255, 255, 0.6), 0 0 15px rgba(0, 255, 255, 0.6);
-    font-size: 18px;
-    padding: 12px;
+    text-shadow: 0 0 6px #4dd0e1, 0 0 12px #26c6da, 0 0 20px #00bcd4;
+    font-size: 19px;
+    padding: 15px; /* More padding */
     text-align: center;
-    transition: background-color 0.3s ease-in-out;
+    transition: background-color 0.2s ease-in-out, text-shadow 0.2s ease-in-out;
 }
 
-/* Table Cell Styles with Neon and Vibrant Colors */
+/* Table Cell Styles with Subtle Animation */
 td {
-    border: 1px solid #ddd;
-    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.08); /* Lighter border */
+    padding: 12px 15px;
     text-align: left;
-    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, box-shadow 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
     position: relative;
-    background-color: rgba(255, 255, 255, 0.1); /* Glassmorphism effect */
-    color: #ecf0f1; /* Light color for the text */
+    background-color: rgba(255, 255, 255, 0.05); /* Very subtle glass */
+    color: #eee;
 }
 
-/* Neon Glow Effect for Table Rows on Hover */
-tr:hover {
-    background-color: rgba(0, 255, 255, 0.1); /* Soft cyan glow on hover */
-    box-shadow: 0 0 15px rgba(255, 0, 255, 1), 0 0 25px rgba(255, 0, 255, 0.8); /* Neon glow */
-    transition: background-color 0.5s ease-in-out, box-shadow 0.3s ease-in-out;
+/* Dynamic Neon Glow Effect for Table Rows on Hover - Magenta Flash */
+tr:hover td {
+    background-color: rgba(236, 64, 122, 0.1); /* Pink with flash */
+    box-shadow: 0 0 18px rgba(236, 64, 122, 0.8), 0 0 30px rgba(236, 64, 122, 0.6);
+    transform: translateY(-1px); /* Tiny lift */
 }
 
-/* Alternate Row Colors for Better Contrast */
+/* Alternate Row Colors with Depth */
 tr:nth-child(even) td {
-    background-color: rgba(42, 42, 42, 0.8); /* Darker background for even rows */
-    color: #bbb;
+    background-color: rgba(50, 50, 50, 0.7);
+    color: #dcdcdc;
 }
 
 tr:nth-child(odd) td {
-    background-color: rgba(37, 37, 37, 0.8); /* Slightly different dark color for odd rows */
-    color: #ccc;
+    background-color: rgba(40, 40, 40, 0.7);
+    color: #e0e0e0;
 }
 
-/* Hover Effect for Table Cells */
+/* Interactive Hover Effect for Table Cells - Pulsate */
 td:hover {
     background-color: rgba(255, 255, 255, 0.1);
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.6), 0 0 10px rgba(255, 255, 255, 0.6), 0 0 15px rgba(255, 255, 255, 0.6);
-    transition: background-color 0.5s ease-in-out, text-shadow 0.3s ease-in-out;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.7), 0 0 15px rgba(255, 255, 255, 0.5);
+    transform: scale(1.02); /* Gentle pulse */
 }
 
-/* Table with a Light Mode Color Scheme */
+/* Light Mode Table - Crystal Clarity */
 .light-mode table {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #222;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #444;
 }
 
-.light-mode th, .light-mode td {
-    color: #222;
+.light-mode th,
+.light-mode td {
+    color: #333;
 }
 
-/* Dark Mode Table */
+/* Dark Mode Table - Obsidian Depth */
 .dark-mode table {
-    background-color: rgba(28, 28, 28, 0.9); /* Dark background with Glassmorphism */
-    color: #e0e0e0;
+    background-color: rgba(30, 30, 30, 0.85);
+    color: #f5f5f5;
 }
 
-.dark-mode th, .dark-mode td {
-    color: #e0e0e0;
+.dark-mode th,
+.dark-mode td {
+    color: #eee;
 }
 
-/* Neon Glowing Borders for Table Cells */
-th, td {
-    border: 2px solid rgba(0, 255, 255, 0.5); /* Neon cyan borders for a glowing effect */
+/* Dynamic Neon Glowing Borders for Table Cells - Cyan Edge */
+th,
+td {
+    border: 2px solid rgba(0, 255, 255, 0.6);
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-    /* Add a subtle hover effect to headings */
+    /* Enhanced Hover Effect for Headings - Luminescence */
     th:hover {
-        background-color: rgba(0, 255, 255, 0.3);
-        box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
-        transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        background-color: rgba(0, 255, 255, 0.4);
+        box-shadow: 0 0 12px rgba(0, 255, 255, 0.9);
+        border-color: rgba(255, 255, 255, 0.9);
     }
 
-/* Add Glow Effect for the Table Rows */
+/* Pulsating Glow Effect for Table Rows */
 table tr:hover {
-    background-color: rgba(255, 0, 255, 0.1); /* Pinkish glow on hover */
-    box-shadow: 0 0 20px rgba(255, 0, 255, 0.8); /* Neon pink glow */
+    animation: rowGlow 1s ease-in-out infinite alternate;
 }
 
+@keyframes rowGlow {
+    from {
+        box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+        background-color: rgba(255, 0, 255, 0.05);
+    }
 
-/* Fade-in Animation for New Content */
+    to {
+        box-shadow: 0 0 25px rgba(255, 0, 255, 0.8);
+        background-color: rgba(255, 0, 255, 0.1);
+    }
+}
+
+/* Sophisticated Fade-in Animation */
 .fade-in {
-    animation: fadeIn 0.8s ease-in-out;
+    animation: sophisticatedFadeIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Overshoot effect */
 }
 
-@keyframes fadeIn {
+@keyframes sophisticatedFadeIn {
     from {
         opacity: 0;
-        transform: translateY(-10px);
+        transform: translateY(-20px) scale(0.95);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
