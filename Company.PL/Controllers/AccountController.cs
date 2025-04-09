@@ -124,7 +124,8 @@ namespace Company.PL.Controllers
         {
             var result = await HttpContext.AuthenticateAsync(GoogleDefaults.AuthenticationScheme);
             var claims = result.Principal.Identities.FirstOrDefault().Claims.Select(
-                claim => new {
+                claim => new
+                {
                     claim.Issuer,
                     claim.OriginalIssuer,
                     claim.Type,
@@ -217,59 +218,48 @@ namespace Company.PL.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> SendResetPasswordUrl(ForgetPasswordDto model)
+        public async Task<IActionResult> SendResetPassword(string email, string resetMethod)
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
+                var user = await _userManager.FindByEmailAsync(email);
                 if (user is not null)
                 {
                     var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                    var url = Url.Action("ResetPassword", "Account", new { email = model.Email, token }, Request.Scheme);
+                    var url = Url.Action("ResetPassword", "Account", new { email, token }, Request.Scheme);
 
-                    var email = new Email()
+                    if (resetMethod == "Email")
                     {
-                        To = model.Email,
-                        Subject = "Reset Password",
-                        Body = url
-                    };
-                    //var flag = EmailSettings.SendEmail(email);
+                        var emailMessage = new Email()
+                        {
+                            To = email,
+                            Subject = "Reset Password",
+                            Body = $"Click the link to reset your password: {url}"
+                        };
+                        _mailService.SendEmail(emailMessage);
 
-                    _mailService.SendEmail(email);
+                        // Redirect to CheckYourBox view
+                        return RedirectToAction(nameof(CheckYourBox));
+                    }
+                    else if (resetMethod == "Sms")
+                    {
+                        var smsMessage = new Sms()
+                        {
+                            To = user.PhoneNumber,
+                            Body = $"Reset your password using this link: {url}"
+                        };
+                        _twilioService.SendSms(smsMessage);
 
-                    return RedirectToAction(nameof(CheckYourBox));
+                        // Redirect to CheckYourPhone view
+                        return RedirectToAction(nameof(CheckYourPhone));
+                    }
                 }
             }
-            ModelState.AddModelError("", "Invalid Reset Password Operation !!");
+
+            ModelState.AddModelError("", "Invalid Reset Password Operation!");
             return View("ForgotPassword");
         }
 
-        [HttpPost]
-        public async Task<IActionResult> SendResetPasswordSms(ForgetPasswordDto model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user is not null)
-                {
-
-                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                    var url = Url.Action("ResetPassword", "Account", new { email = model.Email, token }, Request.Scheme);
-
-                    var sms = new Sms()
-                    {
-                        To = user.PhoneNumber,
-                        Body = url
-                    };
-
-                    _twilioService.SendSms(sms);
-
-                    return RedirectToAction(nameof(CheckYourPhone));
-                }
-            }
-            ModelState.AddModelError("", "Invalid Reset Password Operation !!");
-            return View("ForgotPassword");
-        }
 
         #endregion
 
@@ -278,7 +268,7 @@ namespace Company.PL.Controllers
         [HttpGet]
         public IActionResult ResetPassword(string email, string token)
         {
-            TempData["email"] =email;
+            TempData["email"] = email;
             TempData["token"] = token;
             return View();
         }
@@ -290,12 +280,12 @@ namespace Company.PL.Controllers
             {
                 var email = TempData["email"] as string;
                 var token = TempData["token"] as string;
-                if(email is null || token is null) return BadRequest("Invalid Operations");
+                if (email is null || token is null) return BadRequest("Invalid Operations");
                 var user = await _userManager.FindByEmailAsync(email);
-                if(user is not null)
+                if (user is not null)
                 {
                     var result = await _userManager.ResetPasswordAsync(user, token, model.NewPassword);
-                    if(result.Succeeded)
+                    if (result.Succeeded)
                     {
                         return RedirectToAction("SignIn");
                     }

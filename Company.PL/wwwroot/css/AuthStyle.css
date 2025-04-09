@@ -465,3 +465,66 @@ body {
         height: calc(10vw - 2px);
     }
 }
+/* Forgot Password Form Styles */
+.forgot-password-container {
+    background: rgba(255, 255, 255, 0.1); /* Glassmorphism */
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.form-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #00d5ff;
+    text-shadow: 0 0 10px #00d5ff, 0 0 20px #00d5ff, 0 0 30px #00d5ff;
+}
+
+.form-subtitle {
+    font-size: 16px;
+    color: #ccc;
+    margin-top: 5px;
+}
+
+.input-group-text {
+    background-color: rgba(51, 51, 51, 0.8);
+    color: #fff;
+    border: 1.5px solid #00b4f6;
+    border-radius: 8px 0 0 8px;
+    box-shadow: 0 0 10px rgba(0, 213, 255, 0.3);
+}
+
+.form-control {
+    background-color: rgba(51, 51, 51, 0.8);
+    color: #fff;
+    border: 1.5px solid #00b4f6;
+    border-left: none;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 0 10px rgba(0, 213, 255, 0.3);
+}
+
+.form-check-label {
+    color: #ccc;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-primary {
+    background-color: rgb(20, 180, 255);
+    border: none;
+    box-shadow: 0 0 15px rgba(0, 213, 255, 0.4);
+    transition: all 0.3s ease;
+}
+
+    .btn-primary:hover {
+        background-color: rgb(70, 86, 255);
+        box-shadow: 0 0 25px rgba(70, 86, 255, 0.8);
+    }
+
+    .btn-primary:active {
+        transform: scale(0.97);
+    }
