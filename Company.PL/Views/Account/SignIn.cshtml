@@ -1,96 +1,89 @@
 ﻿@model SignInDto
+
 @{
-	ViewData["Title"] = "SignIn";
-	Layout = "~/Views/Shared/_AuthLayout.cshtml";
+    ViewData["Title"] = "SignIn";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
 }
 
-<header class="mb-4">Sign Up Form</header>
-
+<header class="mb-4">Sign In Form</header>
 <form asp-action="SignIn">
-	<!-- Name Fields - Bootstrap Grid -->
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div> <div class="row mb-3">
+        <div class="col-12">
+            <div class="field email-field">
+                <div class="input-field">
+                    <input type="email" asp-for="Email" placeholder="Enter your email" class="email form-control" required />
+                    <i class='bx bx-envelope'></i>
+                </div>
+                <span asp-validation-for="Email" class="text-danger"></span>
+                <div class="error error-txt">
+                    <i class='bx bx-error-circle error-icon'></i>
+                    <p>Enter a valid email address</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="field create-password">
+                <div class="input-field">
+                    <input type="password" asp-for="Password" placeholder="Password" class="password form-control" required />
+                    <i class='bx bx-lock-alt'></i>
+                    <i class="bx bx-hide show-hide"></i>
+                </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+                <div class="error error-txt">
+                    <i class='bx bx-error-circle error-icon'></i>
+                    <p>Password must be at least 8 characters</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<!-- Email Field -->
-	<div class="row mb-3">
-		<div class="col-12">
-			<div class="field email-field">
-				<div class="input-field">
-					<input type="email" asp-for="Email" placeholder="Enter your email" class="email form-control" required />
-					<i class='bx bx-envelope'></i>
-				</div>
-				<div class="error error-txt">
-					<i class='bx bx-error-circle error-icon'></i>
-					<p>Enter a valid email address</p>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="links d-flex justify-content-between">
+                <a asp-action="ForgotPassword" class="text-decoration-none">Forgot Password</a>
+                <a asp-action="SignUp" class="text-decoration-none">SignUp</a>
+            </div>
+        </div>
+    </div>
 
-	<!-- Password Fields - Bootstrap Grid -->
-	<div class="row mb-3">
-		<div class="col-12">
-			<div class="field create-password">
-				<div class="input-field">
-					<input type="password" asp-for="Password" placeholder="Password" class="password form-control" required />
-					<i class='bx bx-lock-alt'></i>
-					<i class="bx bx-hide show-hide"></i>
-				</div>
-				<div class="error error-txt">
-					<i class='bx bx-error-circle error-icon'></i>
-					<p>Password must be at least 8 characters</p>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="button">
+                <input type="submit" value="SignIn Now" class="btn w-100" />
+            </div>
+        </div>
+    </div>
 
-	<!-- Form Links -->
-	<div class="row mb-3">
-		<div class="col-12">
-			<div class="links d-flex justify-content-between">
-				<a asp-action="ForgotPassword" class="text-decoration-none">Forgot Password</a>
-				<a asp-action="SignUp" class="text-decoration-none">SignUp</a>
-			</div>
-		</div>
-	</div>
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="divider">
+                <span>OR</span>
+            </div>
+        </div>
+    </div>
 
-	<!-- Signup Button -->
-	<div class="row mb-3">
-		<div class="col-12">
-			<div class="button">
-				<input type="submit" value="SignIn Now" class="btn w-100" />
-			</div>
-		</div>
-	</div>
-
-	<!-- Divider -->
-	<div class="row mb-3">
-		<div class="col-12">
-			<div class="divider">
-				<span>OR</span>
-			</div>
-		</div>
-	</div>
-
-	<!-- Social Signup Buttons - Bootstrap Grid -->
-	<div class="row">
-		<div class="col-md-6 mb-3">
-			<a asp-action="GoogleLogin" class="btn-google d-flex align-items-center justify-content-center">
-				<i class="fab fa-google me-2"></i>
-				<span>Signin with Google</span>
-			</a>
-		</div>
-		<div class="col-md-6 mb-3">
-			<a asp-action="FacebookLogin" class="btn-facebook d-flex align-items-center justify-content-center">
-				<i class="fab fa-facebook-f me-2"></i>
-				<span>Signin with Facebook</span>
-			</a>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <a asp-action="GoogleLogin" class="btn-google d-flex align-items-center justify-content-center">
+                <i class="fab fa-google me-2"></i>
+                <span>Signin with Google</span>
+            </a>
+        </div>
+        <div class="col-md-6 mb-3">
+            <a asp-action="FacebookLogin" class="btn-facebook d-flex align-items-center justify-content-center">
+                <i class="fab fa-facebook-f me-2"></i>
+                <span>Signin with Facebook</span>
+            </a>
+        </div>
+    </div>
 </form>
 
 @section ValidationSection {
-	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-	<script src="~/js/script1.js"></script>
-	<script src="~/js/script2.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/script1.js"></script>
+    <script src="~/js/script2.js"></script>
 }

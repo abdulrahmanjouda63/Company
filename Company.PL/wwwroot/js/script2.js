@@ -1,115 +1,101 @@
-﻿// Create grid cells for background
-document.addEventListener("DOMContentLoaded", () => {
-    const gridBackground = document.querySelector(".grid-background")
-    const isMobile = window.innerWidth <= 768
-    const gridSize = isMobile ? 100 : 256 // Fewer cells on mobile for better performance
+﻿document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("form");
+    if (!form) return;
 
-    // Create grid cells
-    for (let i = 0; i < gridSize; i++) {
-        const gridCell = document.createElement("div")
-        gridCell.classList.add("grid-cell")
-        gridBackground.appendChild(gridCell)
-    }
+    const nameFields = form.querySelectorAll(".name-field");
+    const usernameField = form.querySelector(".username-field");
+    const usernameInput = usernameField?.querySelector(".username");
+    const emailField = form.querySelector(".email-field");
+    const emailInput = emailField?.querySelector(".email");
+    const phoneField = form.querySelector(".phone-field");
+    const phoneInput = phoneField?.querySelector(".phone");
+    const passField = form.querySelector(".create-password");
+    const passInput = passField?.querySelector(".password");
+    const cPassField = form.querySelector(".confirm-password");
+    const cPassInput = cPassField?.querySelector(".cPassword");
 
-    // Form validation
-    const form = document.querySelector("form"),
-        nameFields = form.querySelectorAll(".name-field"),
-        usernameField = form.querySelector(".username-field"),
-        usernameInput = usernameField.querySelector(".username"),
-        emailField = form.querySelector(".email-field"),
-        emailInput = emailField.querySelector(".email"),
-        phoneField = form.querySelector(".phone-field"),
-        phoneInput = phoneField.querySelector(".phone"),
-        passField = form.querySelector(".create-password"),
-        passInput = passField.querySelector(".password"),
-        cPassField = form.querySelector(".confirm-password"),
-        cPassInput = cPassField.querySelector(".cPassword")
+    const setInvalid = (field) => field?.classList.add("invalid");
+    const setValid = (field) => field?.classList.remove("invalid");
 
-    // Username Validation
-    function checkUsername() {
-        if (usernameInput.value.length < 3) {
-            return usernameField.classList.add("invalid")
+    const checkUsername = () => {
+        setInvalid(usernameField);
+        if (usernameInput?.value.trim().length >= 3) {
+            setValid(usernameField);
         }
-        usernameField.classList.remove("invalid")
-    }
+    };
 
-    // Email Validation
-    function checkEmail() {
-        const emaiPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/
-        if (!emailInput.value.match(emaiPattern)) {
-            return emailField.classList.add("invalid")
+    const checkEmail = () => {
+        setInvalid(emailField);
+        const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+        if (emailInput?.value.match(emailPattern)) {
+            setValid(emailField);
         }
-        emailField.classList.remove("invalid")
-    }
+    };
 
-    // Phone Validation
-    function checkPhone() {
-        const phonePattern = /^[\d\s+\-$$]{10,15}$/
-        if (!phoneInput.value.match(phonePattern)) {
-            return phoneField.classList.add("invalid")
+    const checkPhone = () => {
+        setInvalid(phoneField);
+        const phonePattern = /^[\d\s+\-]{10,15}$/;
+        if (phoneInput?.value.match(phonePattern)) {
+            setValid(phoneField);
         }
-        phoneField.classList.remove("invalid")
-    }
+    };
 
-    // Password Validation
-    function checkPassword() {
-        if (passInput.value.length < 8) {
-            return passField.classList.add("invalid")
+    const checkPassword = () => {
+        setInvalid(passField);
+        if (passInput?.value.length >= 8) {
+            setValid(passField);
         }
-        passField.classList.remove("invalid")
-    }
+    };
 
-    // Confirm Password Validation
-    function confirmPass() {
-        if (passInput.value !== cPassInput.value || cPassInput.value === "") {
-            return cPassField.classList.add("invalid")
+    const confirmPass = () => {
+        setInvalid(cPassField);
+        if (passInput?.value === cPassInput?.value && cPassInput?.value !== "") {
+            setValid(cPassField);
         }
-        cPassField.classList.remove("invalid")
-    }
+    };
 
-    // Hide and show password
-    const eyeIcons = document.querySelectorAll(".show-hide")
+    const debounce = (func, delay) => {
+        let timeoutId;
+        return (...args) => {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => func.apply(this, args), delay);
+        };
+    };
 
-    eyeIcons.forEach((eyeIcon) => {
-        eyeIcon.addEventListener("click", () => {
-            const pInput = eyeIcon.parentElement.querySelector("input")
-            if (pInput.type === "password") {
-                eyeIcon.classList.replace("bx-hide", "bx-show")
-                return (pInput.type = "text")
-            }
-            eyeIcon.classList.replace("bx-show", "bx-hide")
-            pInput.type = "password"
-        })
-    })
+    // 🔄 Real-time validation
+    usernameInput?.addEventListener("keyup", debounce(checkUsername, 300));
+    emailInput?.addEventListener("keyup", debounce(checkEmail, 300));
+    phoneInput?.addEventListener("keyup", debounce(checkPhone, 300));
+    passInput?.addEventListener("keyup", debounce(checkPassword, 300));
+    cPassInput?.addEventListener("keyup", debounce(confirmPass, 300));
 
-    // Form submission
+    // ✅ Final Submit Validation
     form.addEventListener("submit", (e) => {
-        // Validate all fields
-        checkUsername()
-        checkEmail()
-        checkPhone()
-        checkPassword()
-        confirmPass()
+        checkUsername();
+        checkEmail();
+        checkPhone();
+        checkPassword();
+        confirmPass();
 
-        // Check if any field is invalid
         const hasInvalidField =
-            usernameField.classList.contains("invalid") ||
-            emailField.classList.contains("invalid") ||
-            phoneField.classList.contains("invalid") ||
-            passField.classList.contains("invalid") ||
-            cPassField.classList.contains("invalid")
+            usernameField?.classList.contains("invalid") ||
+            emailField?.classList.contains("invalid") ||
+            phoneField?.classList.contains("invalid") ||
+            passField?.classList.contains("invalid") ||
+            cPassField?.classList.contains("invalid");
 
-        // If any field is invalid, prevent form submission
         if (hasInvalidField) {
-            e.preventDefault()
+            e.preventDefault();
+        } else {
+            const submitButton = form.querySelector('button[type="submit"], input[type="submit"]');
+            if (submitButton) {
+                submitButton.disabled = true;
+                if (submitButton.tagName.toLowerCase() === "button") {
+                    submitButton.textContent = "Submitting...";
+                } else {
+                    submitButton.value = "Submitting...";
+                }
+            }
         }
-
-        // Add keyup validation after first submission attempt
-        usernameInput.addEventListener("keyup", checkUsername)
-        emailInput.addEventListener("keyup", checkEmail)
-        phoneInput.addEventListener("keyup", checkPhone)
-        passInput.addEventListener("keyup", checkPassword)
-        passInput.addEventListener("keyup", confirmPass) // Also check confirm password when password changes
-        cPassInput.addEventListener("keyup", confirmPass)
-    })
-})
+    });
+});

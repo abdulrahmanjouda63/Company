@@ -89,11 +89,12 @@
 		<div class="col-md-6 mb-3 mb-md-0">
 			<div class="field create-password">
 				<div class="input-field">
-					<input type="password" asp-for="Password" placeholder="Password" class="password form-control" required />
+					<input type="password" asp-for="Password" placeholder="Password" class="password form-control"
+						   required autocomplete="new-password" aria-describedby="passwordHelp" />
 					<i class='bx bx-lock-alt'></i>
 					<i class="bx bx-hide show-hide"></i>
 				</div>
-				<div class="error error-txt">
+				<div class="error error-txt d-none" id="passwordHelp">
 					<i class='bx bx-error-circle error-icon'></i>
 					<p>Password must be at least 8 characters</p>
 				</div>
@@ -102,17 +103,19 @@
 		<div class="col-md-6">
 			<div class="field confirm-password">
 				<div class="input-field">
-					<input type="password" asp-for="ConfirmPassword" placeholder="Confirm Password" class="cPassword form-control" required />
+					<input type="password" asp-for="ConfirmPassword" placeholder="Confirm Password" class="cPassword form-control"
+						   required autocomplete="new-password" aria-describedby="confirmHelp" />
 					<i class='bx bx-lock-alt'></i>
 					<i class="bx bx-hide show-hide"></i>
 				</div>
-				<div class="error error-txt">
+				<div class="error error-txt d-none" id="confirmHelp">
 					<i class='bx bx-error-circle error-icon'></i>
 					<p>Passwords don't match</p>
 				</div>
 			</div>
 		</div>
 	</div>
+
 
 	<!-- Form Links -->
 	<div class="row mb-3">
@@ -161,6 +164,7 @@
 
 
 @section ValidationSection {
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 	<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 	<script src="~/js/script1.js"></script>
